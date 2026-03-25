@@ -1,0 +1,13 @@
+{
+  "actorSpecification": 1,
+  "name": "smart-commit-changelog",
+  "title": "Smart Commit & Changelog MCP",
+  "description": "Git diff → semantic commit messages + changelogs. MCP server with 6 tools. All local, zero external APIs.",
+  "version": "1.0.0",
+  "buildTag": "latest",
+  "env": null,
+  "dockerfile": "../Dockerfile",
+  "readme": "../README.md",
+  "input": "./input_schema.json",
+  "storages": {}
+}

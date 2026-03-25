@@ -1,0 +1,8 @@
+{
+  "title": "Smart Commit & Changelog MCP Server",
+  "description": "No input required. The server starts automatically and exposes MCP tools via POST /mcp.",
+  "type": "object",
+  "schemaVersion": 1,
+  "properties": {},
+  "required": []
+}

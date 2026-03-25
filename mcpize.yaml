@@ -1,0 +1,5 @@
+name: smart-commit-changelog
+description: "Git diff → semantic commit messages + changelogs. 6 MCP tools. All local, zero external APIs."
+runtime: container
+port: 3000
+path: /mcp

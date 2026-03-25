@@ -1,0 +1,41 @@
+{
+  "name": "@lazymac/smart-commit-changelog",
+  "version": "1.0.0",
+  "description": "Git diff to semantic commit messages and changelogs. Local MCP server — zero external APIs.",
+  "main": "src/server.js",
+  "bin": {
+    "smart-commit-changelog": "./src/server.js"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node test.js"
+  },
+  "keywords": [
+    "git",
+    "commit",
+    "changelog",
+    "conventional-commits",
+    "mcp",
+    "semantic",
+    "release-notes",
+    "diff",
+    "breaking-changes"
+  ],
+  "author": "lazymac",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2"
+  },
+  "files": [
+    "src/",
+    "openapi.yaml",
+    "mcpize.yaml",
+    "Dockerfile",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lazymac-dev/smart-commit-changelog.git"
+  }
+}

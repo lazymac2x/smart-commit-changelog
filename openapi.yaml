@@ -1,0 +1,196 @@
+openapi: 3.1.0
+info:
+  title: Smart Commit & Changelog
+  version: 1.0.0
+  description: >
+    Git diff → semantic commit messages + changelogs.
+    MCP server with 6 tools. All local processing, zero external APIs.
+
+servers:
+  - url: http://localhost:3000
+
+paths:
+  /health:
+    get:
+      operationId: health
+      summary: Health check
+      responses:
+        "200":
+          description: Server status
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  tools:
+                    type: integer
+
+  /tools:
+    get:
+      operationId: listTools
+      summary: List available MCP tools
+      responses:
+        "200":
+          description: Tool list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  tools:
+                    type: array
+
+  /api/analyze_diff:
+    post:
+      operationId: analyzeDiff
+      summary: Parse and categorize a git diff
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [diff]
+              properties:
+                diff:
+                  type: string
+                  description: Raw git diff output
+      responses:
+        "200":
+          description: Categorized diff analysis
+
+  /api/generate_commit:
+    post:
+      operationId: generateCommit
+      summary: Generate semantic commit message from diff
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [diff]
+              properties:
+                diff:
+                  type: string
+                  description: Raw git diff output
+                type:
+                  type: string
+                  enum: [feat, fix, refactor, docs, style, test, chore]
+                scope:
+                  type: string
+      responses:
+        "200":
+          description: Generated commit message
+
+  /api/generate_changelog:
+    post:
+      operationId: generateChangelog
+      summary: Generate CHANGELOG.md from git log
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [git_log]
+              properties:
+                git_log:
+                  type: string
+                  description: 'Output of: git log --format="%H|%s|%an|%ai|%D" --no-merges'
+                repo_name:
+                  type: string
+                repo_url:
+                  type: string
+      responses:
+        "200":
+          description: Generated changelog
+
+  /api/generate_release_notes:
+    post:
+      operationId: generateReleaseNotes
+      summary: Generate release notes between two refs
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [git_log]
+              properties:
+                git_log:
+                  type: string
+                version:
+                  type: string
+                date:
+                  type: string
+                repo_name:
+                  type: string
+                repo_url:
+                  type: string
+      responses:
+        "200":
+          description: Generated release notes
+
+  /api/detect_breaking:
+    post:
+      operationId: detectBreaking
+      summary: Detect breaking changes in diff
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [diff]
+              properties:
+                diff:
+                  type: string
+                  description: Raw git diff output
+      responses:
+        "200":
+          description: Breaking change analysis
+
+  /api/diff_summary:
+    post:
+      operationId: diffSummary
+      summary: Quick diff summary
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [diff]
+              properties:
+                diff:
+                  type: string
+                  description: Raw git diff output
+      responses:
+        "200":
+          description: Diff summary
+
+  /mcp:
+    post:
+      operationId: mcp
+      summary: MCP JSON-RPC 2.0 endpoint
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jsonrpc:
+                  type: string
+                id:
+                  type: [string, integer]
+                method:
+                  type: string
+                params:
+                  type: object
+      responses:
+        "200":
+          description: JSON-RPC response
